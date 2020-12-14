@@ -5,9 +5,13 @@ function debug($arr, $die = false){
     if ($die) die();
 }
 $matrix = [
+//    [1 => 2,1,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,7],
+//    [1 => 5,5,5,4,8,6,9,10,11,12,13,14,15,16,17,18,19,6],
     [1 => 2,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6],
     [1 => 4,4,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,8],
 ];
+
+createMatrix($matrix);
 
 function createMatrix($matrix)
 {
@@ -18,13 +22,39 @@ function createMatrix($matrix)
             $mass[$matrix[1][$j]][$matrix[0][$j]] = 1;
         }
     }
-    echo "<br>";
+    showMatrix($mass);
+    getNeighbor($mass);
+}
+
+function showMatrix($matrix){
     for ($i = 1; $i < 20; $i++) {
         for ($j = 1; $j < 20; $j++) {
-            echo $mass[$i][$j] . " ";
+            echo $matrix[$i][$j] . " ";
         }
         echo "<br>";
     }
-    debug($mass);
 }
-createMatrix($matrix);
+
+function getNeighbor($matrix){
+    for ($i = 1; $i < 20; $i++){
+        foreach ($matrix[$i] as $k => $v){
+            if ($v == 0){
+                unset($matrix[$i][$k]);
+            }
+        }
+    }
+    getAverageCount($matrix);
+}
+
+
+function getAverageCount($matrix){
+    for ($i = 1; $i < 20; $i++) {
+        foreach ($matrix[$i] as $k => $v) {
+            $absCount[$i][$k] = abs($i - $k);
+        }
+    }
+    for ($i = 1; $i < 20; $i++) {
+        $avCount[$i] = max($absCount[$i]);
+    }
+    echo round(array_sum($avCount)/count($avCount), 5);
+}

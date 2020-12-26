@@ -77,31 +77,48 @@ function switchRowsAndColumns($mass, $a, $b)
 }
 
 function createNewMatrix($matrix){
-    $a = 1;
-    $b = 2;
     $i = 0;
     $mass = $matrix;
     $av = getNeighbor($matrix);
-    while ($i <3) {
-        while ($b < 20) {
+    foreach ($mass as $k => $v){
+       $stack[$i][$k] = $k;
+    }
+    array_pop($stack[$i]);
+    sort($stack[$i]);
+    $c = 0;
+    $d = 1;
+    $a = $stack[$i][$c];
+    $b = $stack[$i][$d];
+    $empiricalСycle = round(3 + count($stack[1])/100, 0);
+    while ($i < $empiricalСycle) {
+        while ($b < count($stack[$i])) {
             $mass = switchRowsAndColumns($mass, $a, $b);
             $lengt = getNeighbor($mass);
-            echo "<br>";
-            showMatrix($mass);
-            echo $lengt;
             if ($av > $lengt) {
                 $av = $lengt;
                 $matrix = $mass;
-                $b++;
+                $stack[$i+1][] = $b;
+                //array_push($stack[$i+1], $b);
+                $d++;
+                $b = $stack[$i][$d];
             } else {
                 $mass = $matrix;
+                $stack[$i+1][] = $a;
+                //array_push($stack[$i+1], $a);
                 $a = $b;
-                $b++;
+                $d++;
+                $b = $stack[$i][$d];
             }
         }
-        $a = 1;
-        $b = 2;
-        $i++;
-        echo "<br>";echo "<br>";echo "<br>";echo "<br>";
+    $stack[$i+1][] = $a;
+    $stack[$i+1][] = $b;
+    $c = 0;
+    $d = 1;
+    $a = $stack[$i+1][$c];
+    $b = $stack[$i+1][$d];
+    $i++;
     }
+    echo "<br>";
+    showMatrix($mass);
+    echo $lengt;
 }

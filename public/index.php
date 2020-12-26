@@ -11,7 +11,9 @@ $matrix = [
     [1 => 4,4,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,8],
 ];
 
-createMatrix($matrix);
+$mass = createMatrix($matrix);
+$avC = getNeighbor($mass);
+createNewMatrix($mass);
 
 function createMatrix($matrix)
 {
@@ -23,7 +25,8 @@ function createMatrix($matrix)
         }
     }
     showMatrix($mass);
-    getNeighbor($mass);
+    echo getNeighbor($mass) . "<br>";
+    return $mass;
 }
 
 function showMatrix($matrix){
@@ -43,9 +46,9 @@ function getNeighbor($matrix){
             }
         }
     }
-    getAverageCount($matrix);
+    $avC = getAverageCount($matrix);
+    return $avC;
 }
-
 
 function getAverageCount($matrix){
     for ($i = 1; $i < 20; $i++) {
@@ -56,5 +59,49 @@ function getAverageCount($matrix){
     for ($i = 1; $i < 20; $i++) {
         $avCount[$i] = max($absCount[$i]);
     }
-    echo round(array_sum($avCount)/count($avCount), 5);
+    $averageCount = round(array_sum($avCount)/count($avCount), 5);
+    return $averageCount;
+}
+
+function switchRowsAndColumns($mass, $a, $b)
+{
+    $tmp = $mass[$a];
+    $mass[$a] = $mass[$b];
+    $mass[$b] = $tmp;
+    for ($i = 1; $i < 20; $i++) {
+        $tmp = $mass[$i][$a];
+        $mass[$i][$a] = $mass[$i][$b];
+        $mass[$i][$b] = $tmp;
+    }
+    return $mass;
+}
+
+function createNewMatrix($matrix){
+    $a = 1;
+    $b = 2;
+    $i = 0;
+    $mass = $matrix;
+    $av = getNeighbor($matrix);
+    while ($i <3) {
+        while ($b < 20) {
+            $mass = switchRowsAndColumns($mass, $a, $b);
+            $lengt = getNeighbor($mass);
+            echo "<br>";
+            showMatrix($mass);
+            echo $lengt;
+            if ($av > $lengt) {
+                $av = $lengt;
+                $matrix = $mass;
+                $b++;
+            } else {
+                $mass = $matrix;
+                $a = $b;
+                $b++;
+            }
+        }
+        $a = 1;
+        $b = 2;
+        $i++;
+        echo "<br>";echo "<br>";echo "<br>";echo "<br>";
+    }
 }

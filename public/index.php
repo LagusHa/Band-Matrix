@@ -1,19 +1,33 @@
 <?php
+require_once 'file.php';
 error_reporting(0);
 function debug($arr, $die = false){
     echo '<pre>' . print_r($arr, true) . '</pre>';
     if ($die) die();
 }
-$matrix = [
-//    [1 => 2,1,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,7],
-//    [1 => 5,5,5,4,8,6,9,10,11,12,13,14,15,16,17,18,19,6],
-    [1 => 2,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6],
-    [1 => 4,4,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,8],
-];
+?>
+<form action="index.php" method="post">
+    <p><b>Выберите файл с матрицей</b></p>
+    <input type="text" name="name" value="19x19.txt">
+    <input type="submit">
+</form>
+<?php
 
-$mass = createMatrix($matrix);
-$avC = getNeighbor($mass);
-createNewMatrix($mass);
+if (!empty($_POST['name'])){
+    $data = $_POST['name'];
+    $matrix = getMatrix($data);
+    $mass = createMatrix($matrix);
+    $avC = getNeighbor($mass);
+    createNewMatrix($mass);
+}
+//$matrix = [
+////    [1 => 2,1,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,7],
+////    [1 => 5,5,5,4,8,6,9,10,11,12,13,14,15,16,17,18,19,6],
+//    [1 => 2,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6],
+//    [1 => 4,4,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,8],
+//];
+//
+
 
 function createMatrix($matrix)
 {
@@ -75,7 +89,7 @@ function switchRowsAndColumns($mass, $a, $b)
     }
     return $mass;
 }
-
+//Можно сделать лучше (отрефакторить)
 function createNewMatrix($matrix){
     $i = 0;
     $mass = $matrix;
@@ -122,3 +136,4 @@ function createNewMatrix($matrix){
     showMatrix($mass);
     echo $lengt;
 }
+

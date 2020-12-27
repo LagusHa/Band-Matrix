@@ -1,5 +1,6 @@
 <?php
 require_once 'file.php';
+require_once 'outputToTxt.php';
 error_reporting(0);
 function debug($arr, $die = false){
     echo '<pre>' . print_r($arr, true) . '</pre>';
@@ -18,7 +19,8 @@ if (!empty($_POST['name'])){
     $matrix = getMatrix($data);
     $mass = createMatrix($matrix);
     $avC = getNeighbor($mass);
-    createNewMatrix($mass);
+    $output = createNewMatrix($mass);
+    writeToTxt($output);
 }
 //$matrix = [
 ////    [1 => 2,1,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,7],
@@ -135,5 +137,6 @@ function createNewMatrix($matrix){
     echo "<br>";
     showMatrix($mass);
     echo $lengt;
+    return $mass;
 }
 

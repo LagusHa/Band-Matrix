@@ -1,15 +1,15 @@
 <?php
-function writeToTxt($matrix){
+function writeToTxt($matrix, $count){
     $file = 'optMatrix.txt';
     $lines = [];
-    for ($i = 1; $i < 20; $i++){
+    for ($i = 1; $i < $count + 1; $i++){
         foreach ($matrix[$i] as $k => $v){
             if ($v == 0){
                 unset($matrix[$i][$k]);
             }
         }
     }
-    for ($i = 1; $i < 20; $i++){
+    for ($i = 1; $i < $count + 1; $i++){
         foreach ($matrix[$i] as $k => $v){
             if ("{$i}" . '-' ."{$k}" != "{$k}" . '-' ."{$i}")
             $lines[0][]= "{$i}" . '-' ."{$k}";

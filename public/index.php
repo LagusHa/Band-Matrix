@@ -20,7 +20,7 @@ if (!empty($_POST['name'])){
     $count = count(array_unique(array_merge($matrix[0],$matrix[1])));
     $mass = createMatrix($matrix,$count);
     $output = createNewMatrix($mass, $count);
-    writeToTxt($output);
+    writeToTxt($output,$count);
 }
 
 function createMatrix($matrix, $count)

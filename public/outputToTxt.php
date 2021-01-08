@@ -1,6 +1,6 @@
 <?php
 function writeToTxt($matrix, $count){
-    $file = 'optMatrix.txt';
+    $file = date(DATE_RFC822);;
     $lines = [];
     for ($i = 1; $i < $count + 1; $i++){
         foreach ($matrix[$i] as $k => $v){
